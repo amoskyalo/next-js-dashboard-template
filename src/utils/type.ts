@@ -11,6 +11,7 @@ export type GetFormikFieldPropsArgs<Type> = {
     isPhoneNumber?: boolean;
     isCardInformation?: boolean;
     isOTP?: boolean;
+    isGroupedCheckbox?: boolean;
 };
 
 export type CardType = 'visa' | 'mastercard' | 'amex' | 'unknown';

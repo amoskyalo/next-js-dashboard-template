@@ -91,7 +91,7 @@ const Utilities = class {
     }
 
     getFormikFieldProps<Type>(args: GetFormikFieldPropsArgs<Type>): any {
-        const { formik, field, isPhoneNumber, isAutoComplete, isCardInformation, isOTP } = args;
+        const { formik, field, isPhoneNumber, isAutoComplete, isCardInformation, isOTP, isGroupedCheckbox } = args;
         const { values, errors, touched, getFieldProps, setFieldValue } = formik;
 
         const formField = String(field);
@@ -116,6 +116,10 @@ const Utilities = class {
 
         const handleOTPChange = (value: string) => {
             setFieldValue(formField, value);
+        };
+
+        const handleGroupedCheckboxChange = (__: React.ChangeEvent<HTMLInputElement>, newValue: any) => {
+            setFieldValue(formField, newValue);
         };
 
         const commonProps = {
@@ -152,6 +156,13 @@ const Utilities = class {
         if (isOTP) {
             return {
                 onChange: handleOTPChange,
+                ...commonProps,
+            };
+        }
+
+        if (isGroupedCheckbox) {
+            return {
+                onChange: handleGroupedCheckboxChange,
                 ...commonProps,
             };
         }

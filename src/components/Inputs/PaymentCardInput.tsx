@@ -168,7 +168,7 @@ export const PaymentCardInput = ({ onChange, error, errorMessages }: PaymentCard
                 </Grid>
             </Box>
             {Boolean(getErrorMessage()) && (
-                <FormHelperText error sx={{ pl: 1 }}>
+                <FormHelperText error sx={{ pl: 2 }}>
                     {getErrorMessage()}
                 </FormHelperText>
             )}

@@ -1,4 +1,4 @@
-import { TextFieldProps } from '@mui/material';
+import { TextFieldProps, AutocompleteProps, SelectProps, CheckboxProps } from '@mui/material';
 import { CountryCode } from 'libphonenumber-js';
 
 export type PaymentCardInputOnChangeArgs = {
@@ -32,6 +32,33 @@ export type PaymentCardInputProps = Omit<TextFieldProps, 'onChange' | 'heperText
         expiryDate?: string;
         cvv?: string;
     };
+};
+
+export type AutocompleteFieldProps = Omit<AutocompleteProps<any, any, any, any>, 'renderInput'> & {
+    label?: string;
+    error?: boolean;
+    helperText?: string;
+    placeholder?: string;
+};
+
+export type SelectFieldProps = SelectProps & {
+    options?: { value: string | number; label: string }[];
+    children?: React.ReactNode;
+    helperText?: string | boolean;
+};
+
+export type CheckboxInputProps = CheckboxProps & {
+    label: string;
+};
+
+export type GroupedCheckboxInputProps = {
+    options: { name: string; value: any }[];
+    label?: string;
+    error?: boolean;
+    helperText?: string;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>, value: any) => void;
+    value?: any;
+    multiple?: boolean;
 };
 
 export type Country = {

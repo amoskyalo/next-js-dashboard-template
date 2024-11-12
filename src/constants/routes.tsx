@@ -12,6 +12,7 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import WarehouseIcon from '@mui/icons-material/Warehouse';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import SettingsIcon from '@mui/icons-material/Settings';
+import CodeIcon from '@mui/icons-material/Code';
 import { Navigation } from '@toolpad/core/AppProvider';
 
 const NAVIGATION: Navigation = [
@@ -102,6 +103,11 @@ const NAVIGATION: Navigation = [
         segment: 'settings',
         title: 'Settings',
         icon: <SettingsIcon />,
+    },
+    {
+        segment: 'developer',
+        title: 'Developer', 
+        icon: <CodeIcon />,
     },
 ];
 
