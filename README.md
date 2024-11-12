@@ -1,6 +1,6 @@
 ## `SCR` folder structure
 
-```javascript
+```
 src/
 ├── api/
 │   ├── apiClient.ts
