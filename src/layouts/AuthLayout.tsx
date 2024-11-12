@@ -7,7 +7,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <Grid container sx={{ height: '100dvh', width: '100%', overflow: 'hidden' }}>
-            <Grid size={isMobile ? 12 : 4} sx={{ height: '100%' }}>
+            <Grid size={isMobile ? 12 : 4} sx={{ height: '100%', width: '100%' }}>
                 {children}
             </Grid>
 
