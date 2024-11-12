@@ -1,5 +1,6 @@
 ## `SCR` folder structure
 
+```javascript
 src/
 ├── api/
 │   ├── apiClient.ts
@@ -79,7 +80,7 @@ src/
     ├── type.ts
     ├── middleware.ts
     └── ...
-
+```
 ### Structure walkthrough
 
 
