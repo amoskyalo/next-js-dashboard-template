@@ -1,14 +1,14 @@
-import { Grid2 as Grid } from '@mui/material';
+import { Grid2 as Grid, Box } from '@mui/material';
 import { useResponsiveness } from '@/hooks';
 import Image from 'next/image';
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
-    const { isMobile } = useResponsiveness();
+    const { isTablet } = useResponsiveness();
 
     return (
         <Grid container sx={{ height: '100dvh', width: '100%', overflow: 'hidden' }}>
-            <Grid size={isMobile ? 12 : 4} sx={{ height: '100%', width: '100%' }}>
-                {children}
+            <Grid size={isTablet ? 12 : 4}>
+                <Box sx={{ height: '100%', width: '100%' }}>{children}</Box>
             </Grid>
 
             <Grid
@@ -18,7 +18,8 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
                     display: {
                         xs: 'none',
                         sm: 'none',
-                        md: 'block',
+                        md: 'none',
+                        lg: 'block',
                     },
                 }}
             >
