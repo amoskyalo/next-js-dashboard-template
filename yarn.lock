@@ -671,7 +671,7 @@
     delaunator "^5.0.1"
     robust-predicates "^3.0.2"
 
-"@mui/x-charts@^7.22.1":
+"@mui/x-charts@^7.22.2":
   version "7.22.2"
   resolved "https://registry.yarnpkg.com/@mui/x-charts/-/x-charts-7.22.2.tgz#9768629d1b5bf949cd4f86da8e1c423dfbf36729"
   integrity sha512-0Y2du4Ed7gOT53l8vVJ4vKT+Jz4Dh/iHnLy8TtL3+XhbPH9Ndu9Q30WwyyzOn84yt37hSUru/njQ1BWaSvVPHw==
