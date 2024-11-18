@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { AppProvider } from '@toolpad/core/nextjs';
 import { Session } from '@toolpad/core/AppProvider';
+import { PageContainer } from '@toolpad/core';
 import { DashboardLayout as MUIDashboardLayout } from '@toolpad/core/DashboardLayout';
 import { NAVIGATION, theme, branding } from '@/constants';
 import { Badge, Box, ListItemIcon, ListItemText, MenuItem, Stack, IconButton } from '@mui/material';
@@ -61,7 +62,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                     ),
                 }}
             >
-                <Box sx={{ padding: 2 }}>{children}</Box>
+                <PageContainer title="" breadcrumbs={[]} maxWidth={false}>
+                    <Box>{children}</Box>
+                </PageContainer>
             </MUIDashboardLayout>
             <DefaultMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl}>
                 {[1, 2, 3].map((item) => (
