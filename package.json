@@ -1,40 +1,41 @@
 {
-  "name": "next-js-dashboard-template",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
-    "@mui/icons-material": "^6.1.6",
-    "@mui/material": "^6.1.6",
-    "@mui/styles": "^6.1.6",
-    "@mui/x-charts": "^7.22.2",
-    "@mui/x-data-grid": "^7.22.1",
-    "@mui/x-date-pickers": "^7.22.1",
-    "@tanstack/react-query": "^5.59.20",
-    "@toolpad/core": "^0.8.1",
-    "axios": "^1.7.7",
-    "cookies-next": "^4.3.0",
-    "formik": "^2.4.6",
-    "libphonenumber-js": "^1.11.14",
-    "next": "15.0.2",
-    "react": "19.0.0-rc-02c0e824-20241028",
-    "react-dom": "19.0.0-rc-02c0e824-20241028",
-    "react-dropzone": "^14.3.5",
-    "yup": "^1.4.0"
-  },
-  "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "15.0.2",
-    "typescript": "^5"
-  }
+    "name": "next-js-dashboard-template",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.13.3",
+        "@emotion/styled": "^11.13.0",
+        "@mui/icons-material": "^6.1.6",
+        "@mui/material": "^6.1.6",
+        "@mui/styles": "^6.1.6",
+        "@mui/x-charts": "^7.22.2",
+        "@mui/x-data-grid": "^7.22.1",
+        "@mui/x-date-pickers": "^7.22.1",
+        "@tanstack/react-query": "^5.59.20",
+        "@toolpad/core": "^0.8.1",
+        "axios": "^1.7.7",
+        "cookies-next": "^4.3.0",
+        "formik": "^2.4.6",
+        "libphonenumber-js": "^1.11.14",
+        "next": "15.0.2",
+        "react": "19.0.0-rc-02c0e824-20241028",
+        "react-dom": "19.0.0-rc-02c0e824-20241028",
+        "react-dropzone": "^14.3.5",
+        "react-icons": "^5.3.0",
+        "yup": "^1.4.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20",
+        "@types/react": "^18",
+        "@types/react-dom": "^18",
+        "eslint": "^8",
+        "eslint-config-next": "15.0.2",
+        "typescript": "^5"
+    }
 }
