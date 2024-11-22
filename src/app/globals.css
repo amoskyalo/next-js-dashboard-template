@@ -12,3 +12,9 @@ body {
   height: 100%;
   width: 100%
 }
+
+.developerPage {
+  border: 1px solid red;
+  height: calc(100dvh - 120px);
+  overflow: hidden;
+}

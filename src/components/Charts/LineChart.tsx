@@ -13,7 +13,6 @@ export const LineChart = () => {
                     data: [5, 1.5, 8.5, 2, 5.5, 2],
                 },
             ]}
-            width={500}
             height={300}
         />
     );

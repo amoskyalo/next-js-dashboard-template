@@ -57,7 +57,7 @@ const CodePreview = ({ title, previewComponent }: { title: string; previewCompon
             <Divider />
 
             {active === 0 && (
-                <Stack sx={{ border: 1, borderTop: 0, borderColor: 'divider', padding: 4 }}>{previewComponent()}</Stack>
+                <Stack sx={{ border: 1, borderTop: 0, borderColor: 'divider', padding: 4 }}>{previewComponent?.()}</Stack>
             )}
         </Box>
     );
