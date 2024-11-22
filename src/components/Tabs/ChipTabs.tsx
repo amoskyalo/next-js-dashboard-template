@@ -6,7 +6,7 @@ const ChipTabs = ({ tabsList, onClick }: ChipTabsProps) => {
     const { isMobile } = useResponsiveness();
 
     return (
-        <Tabs variant="scrollable" scrollButtons={isMobile} allowScrollButtonsMobile={isMobile}>
+        <Tabs variant="scrollable" scrollButtons allowScrollButtonsMobile>
             <Box sx={{ mt: 0.8, display: 'flex', columnGap: 1 }}>
                 {tabsList.map((tab, index) => (
                     <Tab

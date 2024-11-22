@@ -2,6 +2,8 @@ import { CardType, GetFormikFieldPropsArgs } from './type';
 import { array, number, string, object } from 'yup';
 import { isValidPhoneNumber, validatePhoneNumberLength, CountryCode, AsYouType } from 'libphonenumber-js';
 import { PhoneNumberInputOnChangeArgs, PaymentCardInputOnChangeArgs } from '@/components/Inputs/types';
+import { useResponsiveness } from '@/hooks';
+import { GridColDef, GridRowModel } from '@mui/x-data-grid';
 
 const Utilities = class {
     constructor() {
@@ -250,6 +252,30 @@ const Utilities = class {
 
     validateObjectFields(fields: any[]) {
         return fields.some((field) => Object.values(field).some((value) => value === ''));
+    }
+    
+    customizeGridColumns(columns: (GridColDef & { mobileWidth?: number })[]): GridColDef[] {
+        const { isDesktop, isMiniTablet, isMobile } = useResponsiveness();
+
+        return [
+            { field: 'no', headerName: 'No.', width: 50, sortable: false },
+            ...columns.map(({ mobileWidth, width, ...rest }) => {
+                return {
+                    ...rest,
+                    ...(isDesktop
+                        ? { flex: 1 }
+                        : width
+                          ? { width }
+                          : (isMobile || isMiniTablet) && mobileWidth
+                            ? { width: mobileWidth }
+                            : { flex: 1 }),
+                };
+            }),
+        ];
+    }
+
+    getIndexedRows(rows?: GridRowModel[]) {
+        return rows?.map((row, index) => ({ no: String(index + 1).padStart(2, '0') + '.', ...row }));
     }
 };
 

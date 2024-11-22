@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 body {
   padding: 0;
   margin: 0;
@@ -9,4 +11,10 @@ body {
 .login-cover {
   height: 100%;
   width: 100%
+}
+
+.developerPage {
+  border: 1px solid red;
+  height: calc(100dvh - 120px);
+  overflow: hidden;
 }
