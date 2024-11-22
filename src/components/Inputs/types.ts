@@ -20,7 +20,7 @@ export type PhoneNumberInputProps = Omit<TextFieldProps, 'onChange'> & {
     onChange?: (arg: PhoneNumberInputOnChangeArgs) => void;
 };
 
-export type OTPFieldProps = Omit<TextFieldProps, 'onChange'> & {
+export type OTPFieldProps = Omit<TextFieldProps, 'onChange' | 'placeholder'> & {
     length?: number;
     onChange?: (arg: string | number) => void;
 };

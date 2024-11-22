@@ -50,6 +50,15 @@ const theme = createTheme({
             },
         },
     },
+    typography: {
+        fontFamily: ['Public Sans', 'sans-serif'].join(','),
+        h5: {
+            fontWeight: 'bold',
+        },
+        h6: {
+            fontWeight: 'bold',
+        }
+    },
     components: {
         MuiButton: {
             styleOverrides: {
@@ -58,7 +67,6 @@ const theme = createTheme({
                 },
             },
         },
-
     },
 });
 

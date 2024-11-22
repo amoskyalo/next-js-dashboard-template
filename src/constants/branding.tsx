@@ -3,13 +3,11 @@ import Image from 'next/image';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME;
-
 const branding = {
     // default branding approach
     default: {
         logo: <Image src={`/assets/images/logo-3.webp`} alt={`logo`} width={20} height={20} priority />,
-        title: APP_NAME,
+        title: "Acme",
     },
 
     // this is for if you want to set-up you logo as a component
@@ -38,7 +36,7 @@ const branding = {
                         height: '100%',
                     }}
                 >
-                    {[APP_NAME, '/'].map((item) => (
+                    {["Acme", '/'].map((item) => (
                         <Typography variant="h6" color="primary" fontWeight="bold" key={item}>
                             {item}
                         </Typography>
