@@ -1,109 +1,74 @@
-## `SCR` folder structure
+# Table of Contents
 
-```
-src/
-├── api/
-│   ├── apiClient.ts
-│   ├── index.ts
-│   ├── type.ts
-│   ├── urls.ts
-│   └── ...
-│
-├── app/
-│   ├── (dashboard)/
-│   │   ├── dashboard/
-│   │   └── ...
-│   ├── auth/
-│   │   ├── login/
-│   │   │   └── page.tsx
-│   │   ├── sign-up/
-│   │   │   └── page.tsx
-│   │   └── layout.tsx
-│   ├── favicon.ico
-│   ├── globals.css
-│   ├── layout.tsx
-│   ├── page.tsx
-│   └── ...
-│
-├── components/
-│   ├── DataGrids/
-│   ├── Inputs/
-│   │   ├── AutocompleteField.tsx
-│   │   ├── CheckboxInputField.tsx
-│   │   ├── FileUpload.tsx
-│   │   ├── GroupedCheckboxInputField.tsx
-│   │   ├── OTPField.tsx
-│   │   ├── PaymentCardInput.tsx
-│   │   ├── PhoneNumberInput.tsx
-│   │   ├── SelectFieldInput.tsx
-│   │   ├── TextFieldInput.tsx
-│   │   ├── index.ts
-│   │   └── ...
-│   ├── Popover/
-│   │   ├── DefaultMenu.tsx
-│   │   ├── ProfileMenu.tsx
-│   │   ├── index.ts
-│   │   ├── types.ts
-│   │   └── ...
-│   ├── Snackbar/
-│   └── ...
-│
-├── constants/
-│   ├── branding.tsx
-│   ├── index.ts
-│   ├── routes.tsx
-│   ├── theme.tsx
-│   └── ...
-│
-├── context/
-│   ├── CountriesProvider.tsx
-│   ├── QueryClientProviderWrapper.tsx
-│   ├── index.ts
-│   ├── type.ts
-│   └── ...
-│
-├── hooks/
-│   ├── useFetchCountries.ts
-│   ├── useResponsiveness.tsx
-│   ├── index.ts
-│   ├── type.ts
-│   └── ...
-│
-├── layouts/
-│   ├── AuthLayout.tsx
-│   ├── DashboardLayout.tsx
-│   ├── index.ts
-│   └── ...
-│
-└── utils/
-    ├── index.ts
-    ├── type.ts
-    ├── middleware.ts
-    └── ...
-```
-### Structure walkthrough
+-   [Introduction](#introduction)
+-   [Overview](#overview)
+-   [Inspiration](#inspiration)
+-   [Dependancies](#dependancies)
+-   [/api](#api)
+-   [/app](#app)
+-   [/components](#components)
+    -   [Inputs](#inputs)
+    -   [Data Grid](#datagrid)
+    -   [Charts](#charts)
+    -   [Containers](#containers)
+    -   [Dialogs](#dialogs)
+    -   [Popover](#popover)
+    -   [Snackbar](#snackbar)
+    -   [Tabs](#tabs)
+-   [/constants](#constants)
+    -   [Branding](#branding)
+    -   [routes](#routes)
+    -   [theme](#theme)
+-   [/context](#context)
+    -   [CountriesProvided](#countriesProvided)
+    -   [QueryClientProviderWrapper](#queryClientProviderWrapper)
+-   [/hooks](#hooks)
+    -   [api-hooks](#api-hooks)
+        -   [useQueryGet](#useQueryGet)
+        -   [useQueryPost](#useQueryPost)
+    -   [useResponsiveness](#useResponsiveness)
+-   [/layouts](#layouts)
+    -   [AuthLayout](#authLayouts)
+    -   [DashboardLayout](#dashboardLayout)
+-   [/utils](#utils)
+    -   [utils](#utils)
+-   [middleware](#middleware)
 
+## Introduction
 
-1. `api/`
-This folder contains files related to API communication and configuration. Here, you define the API client setup, handle base URLs, and manage request configurations. Any utilities or constants related to API interaction are also placed here.
+### Overview
 
-2. `app/`
-The main application directory, containing individual page components and routing logic. Each subfolder here represents a module or a feature of the application, like dashboard, orders, settings, or authentication. This folder structures the overall flow of the application and organizes components based on the routes they serve.
+This template is designed to streamline your dashboard development process, allowing you
+to kickstart your projects without starting from scratch every time. It comes
+pre-configured with the essential components and utilities that are commonly used in
+modern dashboards. With this template, you'll have most of the foundational setup done
+for you, including `hooks`, `input components`, `data grids`, `snackbars`, `Dialogs`, `popovers` e.t.c.
 
-3. `components/`
-This directory houses all reusable UI components. Components are organized by type or functionality (e.g., Inputs, DataGrids, Popovers) to ensure that each component is accessible and reusable throughout the app. By centralizing these components, we promote code reusability and reduce redundancy.
+### Inspiration
 
-4. `constants/`
-This folder stores application-wide constants and configurations. Here, you can define routes, branding details, themes, or any values that remain constant across the application, making it easy to adjust configurations from a single location.
+I built this MUI dashboard template because I was tired of setting up the same things
+every time I started a new project. Instead of spending time on repetitive
+configurations, I wanted a solid starting point that let me dive straight into building
+the actual features. This template is designed to simplify the process, save time, and
+provide a consistent foundation for any dashboard project.
 
-5. `context/`
-Holds global state management providers using React context. This folder is used to manage global states (such as user authentication or theme settings) that need to be accessible across multiple components or routes.
+#### Dependencies
 
-6. `hooks/`
-Contains custom React hooks that encapsulate reusable logic. This folder is ideal for organizing code that handles specific behaviors, like fetching data or managing responsive design, making the main components cleaner and more focused on their primary responsibilities.
-
-7. `layouts/`
-This directory includes layout components used to wrap pages, providing a consistent structure (e.g., navigation) across different sections of the application. Common layouts include the authentication layout for login/signup pages and the dashboard layout for the main app views.
-
-8. `utils/`
-Stores utility functions, helpers, and middleware that can be used across the application. This folder is intended for any generic logic or helper functions, keeping business logic organized and separated from UI components.
+This project uses the following dependencies.
+| Dependency | Version | Description |
+| ---------------------------------------------------------------------------- | --------------------------- | ---------------------------------------------------------------- |
+| **[@emotion/react](https://mui.com/)** | ^11.13.3 | Library for writing CSS styles with JavaScript. |
+| **[@emotion/styled](https://mui.com/)** | ^11.13.0 | Styled component library for Emotion. |
+| **[@mui/icons-material](https://mui.com/)** | ^6.1.6 | Material UI icons for React. |
+| **[@mui/material](https://mui.com/)** | ^6.1.6 | Material UI React components. |
+| **[@mui/styles](https://mui.com/)** | ^6.1.6 | Material UI styling solutions (legacy version). |
+| **[@mui/x-charts](https://mui.com/)** | ^7.22.2 | Charts library from Material UI. |
+| **[@mui/x-data-grid](https://mui.com/)** | ^7.22.1 | Data grid component from Material UI. |
+| **[@mui/x-date-pickers](https://mui.com/)** | ^7.22.1 | Date pickers from Material UI. |
+| **[@tanstack/react-query](https://tanstack.com/query)** | ^5.59.20 | Data-fetching and state management library for React. |
+| **[@toolpad/core](https://github.com/mui/toolpad)** | 0.10.0 | Toolpad Core for building apps. |
+| **[axios](https://axios-http.com/)** | ^1.7.7 | Promise-based HTTP client for making requests. |
+| **[cookies-next](https://github.com/marcusgold/next-cookies)** | ^4.3.0 | A library for handling cookies in Next.js. |
+| **[formik](https://formik.org/)** | ^2.4.6 | Form management library for React. |
+| **[libphonenumber-js](https://github.com/catamphetamine/libphonenumber-js)** | ^1.11.14 | A library for parsing, formatting, and validating phone numbers. |
+| **[react-icons](https://react-icons.github.io/react-icons/)** | ^5.3.0 | A set of popular icons for React. |
