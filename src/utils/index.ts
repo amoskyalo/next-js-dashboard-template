@@ -63,7 +63,11 @@ const Utilities = class {
             .required('Phone number is required')
             .typeError('Invalid phone number')
             .test('isValid', 'Invalid phone number', (value) => isValidPhoneNumber(String(value), countryCode))
-            .test('isValidLength', 'Invalid phone number length', (value) => validatePhoneNumberLength(String(value), countryCode) === undefined);
+            .test(
+                'isValidLength',
+                'Invalid phone number length',
+                (value) => validatePhoneNumberLength(String(value), countryCode) === undefined,
+            );
 
         function getFieldValidationType(type: string) {
             switch (type) {
@@ -101,9 +105,9 @@ const Utilities = class {
         const error = touched[field] && Boolean(errors[field]);
         const helperText = touched[field] && (errors[field] as any);
 
-        const handlePhoneNumberChange = ({ callingCode, countryCode, value }: PhoneNumberInputOnChangeArgs) => {
-            const startIndex = String(callingCode).length > 4 ? 2 : 1;
-            const formatedValue = new AsYouType(countryCode).input(callingCode + value);
+        const handlePhoneNumberChange = ({ value, code, phone }: PhoneNumberInputOnChangeArgs) => {
+            const startIndex = String(phone).length > 4 ? 2 : 1;
+            const formatedValue = new AsYouType(code).input(phone + value);
 
             setFieldValue(formField, String(formatedValue).split(' ').slice(startIndex).join(' '));
         };
@@ -253,22 +257,23 @@ const Utilities = class {
     validateObjectFields(fields: any[]) {
         return fields.some((field) => Object.values(field).some((value) => value === ''));
     }
-    
-    customizeGridColumns(columns: (GridColDef & { mobileWidth?: number })[]): GridColDef[] {
-        const { isDesktop, isMiniTablet, isMobile } = useResponsiveness();
+
+    customizeGridColumns(columns: (GridColDef & { mobileWidth?: number })[], numbered?: boolean): GridColDef[] {
+        const { isDesktop, isMiniTablet, isMobile, isTablet } = useResponsiveness();
+
+        function getColumnDimensions(mobileWidth: number | undefined, width: number | undefined) {
+            if (isDesktop) return { flex: 1 };
+            if (width) return { width };
+            if ((isMobile || isMiniTablet || isTablet) && mobileWidth) return { width: mobileWidth };
+            return { flex: 1 };
+        }
 
         return [
-            { field: 'no', headerName: 'No.', width: 50, sortable: false },
+            ...(numbered ? [{ field: 'no', headerName: 'No.', width: 50, sortable: false }] : []),
             ...columns.map(({ mobileWidth, width, ...rest }) => {
                 return {
                     ...rest,
-                    ...(isDesktop
-                        ? { flex: 1 }
-                        : width
-                          ? { width }
-                          : (isMobile || isMiniTablet) && mobileWidth
-                            ? { width: mobileWidth }
-                            : { flex: 1 }),
+                    ...getColumnDimensions(mobileWidth, width),
                 };
             }),
         ];

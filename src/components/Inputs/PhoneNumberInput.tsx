@@ -31,34 +31,36 @@ const PhoneNumberInput = ({ label, size, poperWidth, onChange, colorIndex, ...re
 
     useEffect(() => {
         if (country) {
-            setCountryCode(country.codeName);
+            setCountryCode(country.code);
         }
     }, [country]);
 
     const defaultCountry = useMemo(() => {
-        return countries?.find((entry: any) => {
-            const code = entry.cca2;
+        return countries?.find((entry: Country) => {
+            const code = entry.code;
             return countryCode === code;
         });
     }, [countries, countryCode]);
 
     const countryOptions = useMemo(() => {
-        return countries?.filter((entry: any) => entry.name.common.toLowerCase().includes(search?.toLowerCase() ?? ''));
+        return countries?.filter((entry: { code: string; label: string; phone: string }) =>
+            entry.label.toLowerCase().includes(search?.toLowerCase() ?? ''),
+        );
     }, [countries, search]);
 
-    const defaultCallingCode = defaultCountry?.idd.root + defaultCountry?.idd.suffixes[0];
+    const defaultCallingCode = defaultCountry.phone;
 
     const handleCountryChange = (country: Country) => {
-        setAnchorEl(null);
         setCountry(country);
+        setAnchorEl(null);
         setSearch(null);
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange?.({
             event,
-            callingCode: country?.callingCode ?? defaultCallingCode,
-            countryCode: country?.codeName ?? countryCode,
+            phone: country?.phone ?? defaultCallingCode,
+            code: country?.code ?? countryCode,
             value: event.target.value,
         });
     };
@@ -81,7 +83,11 @@ const PhoneNumberInput = ({ label, size, poperWidth, onChange, colorIndex, ...re
                     input: {
                         startAdornment: (
                             <InputAdornment position="start">
-                                <Stack direction="row" alignItems={'center'} onClick={(e) => setAnchorEl(e.currentTarget)}>
+                                <Stack
+                                    direction="row"
+                                    alignItems={'center'}
+                                    onClick={(e) => setAnchorEl(e.currentTarget)}
+                                >
                                     <Stack
                                         direction="row"
                                         alignItems={'center'}
@@ -98,15 +104,15 @@ const PhoneNumberInput = ({ label, size, poperWidth, onChange, colorIndex, ...re
                                         }}
                                     >
                                         <Image
-                                            src={country?.flag ?? defaultCountry?.flags.png}
-                                            alt={country?.name ?? defaultCountry?.name}
+                                            src={`https://flagcdn.com/w20/${country?.code.toLowerCase() ?? defaultCountry.code.toLowerCase()}.png`}
+                                            alt={country?.label ?? defaultCountry.label}
                                             width={25}
                                             height={15}
                                             priority
                                         />
                                         <KeyboardArrowDownIcon fontSize="small" />
                                     </Stack>
-                                    {country?.callingCode ?? defaultCallingCode}
+                                    {country?.phone ?? defaultCallingCode}
                                 </Stack>
                             </InputAdornment>
                         ),
@@ -149,21 +155,26 @@ const PhoneNumberInput = ({ label, size, poperWidth, onChange, colorIndex, ...re
                     <MenuList>
                         {countryOptions?.map((country: any) => (
                             <MenuItem
-                                key={country.name.common}
+                                key={country.label}
                                 onClick={() =>
                                     handleCountryChange({
-                                        name: country.name.common,
-                                        flag: country.flags.png,
-                                        callingCode: country.idd.root + country.idd.suffixes[0],
-                                        codeName: country.cca2,
+                                        label: country.label,
+                                        phone: country.phone,
+                                        code: country.code,
                                     })
                                 }
                             >
                                 <ListItemIcon>
-                                    <Image src={country.flags.png} alt={country.name.common} width={25} height={15} priority/>
+                                    <Image
+                                        src={`https://flagcdn.com/w20/${country.code.toLowerCase()}.png`}
+                                        alt={country.label}
+                                        width={25}
+                                        height={15}
+                                        priority
+                                    />
                                 </ListItemIcon>
                                 <ListItemText>
-                                    {country.name.common} ( {country.idd.root + country.idd.suffixes[0]} )
+                                    {country.label} ( {country.phone} )
                                 </ListItemText>
                             </MenuItem>
                         ))}

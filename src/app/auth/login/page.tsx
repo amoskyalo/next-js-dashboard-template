@@ -77,7 +77,11 @@ const Login = () => {
                                     label="Phone number"
                                     colorIndex={200}
                                     poperWidth={350}
-                                    {...utils.getFormikFieldProps({ formik, field: 'phoneNumber', isPhoneNumber: true })}
+                                    {...utils.getFormikFieldProps({
+                                        formik,
+                                        field: 'phoneNumber',
+                                        isPhoneNumber: true,
+                                    })}
                                 />
 
                                 <TextFieldInput
@@ -99,12 +103,22 @@ const Login = () => {
                                         control={<Checkbox size="small" defaultChecked />}
                                         label="Remember me"
                                     />
-                                    <Link underline="none" sx={{ fontSize: 14, fontWeight: 700 }} href="/forgot-password">
+                                    <Link
+                                        underline="none"
+                                        sx={{ fontSize: 14 }}
+                                        href="/forgot-password"
+                                    >
                                         Forgot password?
                                     </Link>
                                 </Stack>
 
-                                <Button variant="contained" fullWidth type="submit" sx={{ textTransform: 'none' }} disableElevation>
+                                <Button
+                                    variant="contained"
+                                    fullWidth
+                                    type="submit"
+                                    sx={{ textTransform: 'none' }}
+                                    disableElevation
+                                >
                                     Sign In
                                 </Button>
 
