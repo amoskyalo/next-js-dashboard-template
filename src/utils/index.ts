@@ -1,9 +1,11 @@
-import { CardType, GetFormikFieldPropsArgs } from './type';
+import { CardType, GetFormikFieldPropsArgs, MutateOptionsProps } from './type';
 import { array, number, string, object } from 'yup';
 import { isValidPhoneNumber, validatePhoneNumberLength, CountryCode, AsYouType } from 'libphonenumber-js';
 import { PhoneNumberInputOnChangeArgs, PaymentCardInputOnChangeArgs } from '@/components/Inputs/types';
 import { useResponsiveness } from '@/hooks';
 import { GridColDef, GridRowModel } from '@mui/x-data-grid';
+import { APIResponse } from '@/api';
+import { snackbarToast } from '@/components/Snackbar';
 
 const Utilities = class {
     constructor() {
@@ -281,6 +283,54 @@ const Utilities = class {
 
     getIndexedRows(rows?: GridRowModel[]) {
         return rows?.map((row, index) => ({ no: String(index + 1).padStart(2, '0') + '.', ...row }));
+    }
+
+    mutateOptions<TData>({
+        successCallback,
+        successAsyncCallback,
+        errorCallback,
+        setLoading,
+    }: MutateOptionsProps<TData>) {
+        //This function is fully customizable, and fuly depends on the structure of your API response structure.
+        //Make sure to edit it to meet your API response structure.
+        //TData here is the structure of the response body. If you want to edit it, refer to APIResponse interface under the api > types folder.
+        //Refer to the readme for more information about this function.
+
+        const success = (response: APIResponse<TData>) => {
+            const { statusCode, responseMessage } = response;
+
+            if (statusCode === 200) {
+                snackbarToast.success(responseMessage);
+                successCallback?.(response);
+                setLoading?.(false);
+            } else {
+                snackbarToast.error(responseMessage);
+                errorCallback?.(response);
+                setLoading?.(false);
+            }
+        };
+
+        const successAsync = async (response: APIResponse<TData>) => {
+            const { statusCode, responseMessage } = response;
+
+            if (statusCode === 200) {
+                snackbarToast.success(responseMessage);
+                await successAsyncCallback?.(response);
+                setLoading?.(false);
+            } else {
+                snackbarToast.error(responseMessage);
+                errorCallback?.(response);
+                setLoading?.(false);
+            }
+        };
+
+        return {
+            onSuccess: typeof successAsyncCallback == 'function' ? successAsync : success,
+            onError(error: any) {
+                snackbarToast.error('Something went wrong!');
+                setLoading?.(false);
+            },
+        };
     }
 };
 
