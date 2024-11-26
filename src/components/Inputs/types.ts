@@ -9,8 +9,8 @@ export type PaymentCardInputOnChangeArgs = {
 
 export type PhoneNumberInputOnChangeArgs = {
     event: React.SyntheticEvent;
-    callingCode: string | number;
-    countryCode: CountryCode;
+    phone: string | number;
+    code: CountryCode;
     value: string;
 };
 
@@ -62,8 +62,7 @@ export type GroupedCheckboxInputProps = {
 };
 
 export type Country = {
-    name: string;
-    flag: string;
-    callingCode: number;
-    codeName: CountryCode;
+    code: string;
+    label: string;
+    phone: string;
 };

@@ -11,12 +11,11 @@ import {
 import { Box, Button, Grid2, MenuItem, Stack, Typography } from '@mui/material';
 import { AppGrid, DataGridActions } from '@/components/DataGrid';
 import { GridColDef } from '@mui/x-data-grid';
-import { Component, useState } from 'react';
+import { useState } from 'react';
 import { DeleteDialog, WithHeaderDialog } from '@/components/Dialogs';
-import utils from '@/utils';
 import { ChipTabs } from '@/components/Tabs';
 import { LineChart } from '@/components/Charts';
-
+import utils from '@/utils';
 const selectOptions = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
 
 const rows = [
