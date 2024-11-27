@@ -15,6 +15,7 @@ type LoginFormValues = {
     email: string;
     phoneNumber: string;
     password: string;
+    address: string;
 };
 
 const Login = () => {
@@ -27,6 +28,7 @@ const Login = () => {
             { type: 'email', name: 'email' },
             { type: 'password', name: 'password' },
             { type: 'phone_number', name: 'phoneNumber' },
+            { type: 'string', name: 'address' },
         ],
         countryCode,
     );
@@ -55,7 +57,7 @@ const Login = () => {
             </Box>
 
             <Formik
-                initialValues={{ email: '', phoneNumber: '', password: '' }}
+                initialValues={{ email: '', phoneNumber: '', password: '', address: '' }}
                 onSubmit={handleLogin}
                 validateOnBlur={false}
                 validationSchema={validationSchema}
@@ -103,11 +105,7 @@ const Login = () => {
                                         control={<Checkbox size="small" defaultChecked />}
                                         label="Remember me"
                                     />
-                                    <Link
-                                        underline="none"
-                                        sx={{ fontSize: 14 }}
-                                        href="/forgot-password"
-                                    >
+                                    <Link underline="none" sx={{ fontSize: 14 }} href="/forgot-password">
                                         Forgot password?
                                     </Link>
                                 </Stack>

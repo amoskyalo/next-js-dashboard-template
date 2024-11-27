@@ -16,6 +16,7 @@ export type GetFormikFieldPropsArgs<Type> = {
     isCardInformation?: boolean;
     isOTP?: boolean;
     isGroupedCheckbox?: boolean;
+    isLocation?: boolean;
 };
 
 export type MutateOptionsProps<TData> = {
