@@ -99,7 +99,16 @@ const Utilities = class {
     }
 
     getFormikFieldProps<Type>(args: GetFormikFieldPropsArgs<Type>): any {
-        const { formik, field, isPhoneNumber, isAutoComplete, isCardInformation, isOTP, isGroupedCheckbox } = args;
+        const {
+            formik,
+            field,
+            isPhoneNumber,
+            isAutoComplete,
+            isCardInformation,
+            isOTP,
+            isGroupedCheckbox,
+            isLocation,
+        } = args;
         const { values, errors, touched, getFieldProps, setFieldValue } = formik;
 
         const formField = String(field);
@@ -161,7 +170,7 @@ const Utilities = class {
             };
         }
 
-        if (isOTP) {
+        if (isOTP || isLocation) {
             return {
                 onChange: handleOTPChange,
                 ...commonProps,

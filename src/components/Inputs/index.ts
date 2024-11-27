@@ -9,5 +9,6 @@ export * from './SelectFieldInput';
 export * from './CheckboxInputField';
 export * from './GroupedCheckboxInputField';
 export * from './DataGridSearchInput';
+export * from './PlacesSelectInput';
 
 export const PhoneNumberInput = dynamic(() => import('./PhoneNumberInput'), { ssr: false });

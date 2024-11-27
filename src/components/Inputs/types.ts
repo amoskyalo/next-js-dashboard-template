@@ -66,3 +66,27 @@ export type Country = {
     label: string;
     phone: string;
 };
+
+export type MainTextMatchedSubstrings = {
+    offset: number;
+    length: number;
+};
+
+export type StructuredFormatting = {
+    main_text: string;
+    secondary_text: string;
+    main_text_matched_substrings?: readonly MainTextMatchedSubstrings[];
+};
+
+export type PlaceType = {
+    description: string;
+    structured_formatting: StructuredFormatting;
+};
+
+export type PlacesSelectInputProps = {
+    onChange?: (value: string) => void;
+    label?: string;
+    placeholder?: string;
+    helperText?: string;
+    error?: boolean;
+};

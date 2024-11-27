@@ -19,6 +19,7 @@
         "@mui/x-date-pickers": "^7.22.1",
         "@tanstack/react-query": "^5.59.20",
         "@toolpad/core": "0.10.0",
+        "autosuggest-highlight": "^3.3.4",
         "axios": "^1.7.7",
         "cookies-next": "^4.3.0",
         "formik": "^2.4.6",
@@ -30,6 +31,7 @@
         "yup": "^1.4.0"
     },
     "devDependencies": {
+        "@types/autosuggest-highlight": "^3.2.3",
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
