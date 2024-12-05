@@ -15,7 +15,7 @@ declare module '@mui/x-data-grid' {
 const AppGrid = (props: GridProps) => {
     const { onAdd, getRowId, loading, checkboxSelection = true, ...otherProps } = props;
 
-    const footer = () => <DataGridFooter loading={loading} count={10} pageSize={10} page={1} />;
+    const footer = () => <DataGridFooter loading={loading} count={10} />;
 
     return (
         <Box sx={{ borderRadius: 2 }}>
