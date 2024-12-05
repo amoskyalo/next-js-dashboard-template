@@ -11,7 +11,6 @@ import {
     Divider,
     ListItemIcon,
     ListItemText,
-    CircularProgress,
 } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { CountriesContext } from '@/context';
@@ -27,7 +26,7 @@ const PhoneNumberInput = ({ label, size, poperWidth, onChange, colorIndex, ...re
     const [search, setSearch] = useState<string | null>(null);
 
     const [themeMode] = useLocalStorageState('toolpad-mode');
-    const { countries, isLoading, countryCode, setCountryCode } = useContext(CountriesContext);
+    const { countries, countryCode, setCountryCode } = useContext(CountriesContext);
 
     useEffect(() => {
         if (country) {
@@ -147,39 +146,33 @@ const PhoneNumberInput = ({ label, size, poperWidth, onChange, colorIndex, ...re
 
                 <Divider />
 
-                {isLoading ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingY: 2 }}>
-                        <CircularProgress size={28} />
-                    </Box>
-                ) : (
-                    <MenuList>
-                        {countryOptions?.map((country: any) => (
-                            <MenuItem
-                                key={country.label}
-                                onClick={() =>
-                                    handleCountryChange({
-                                        label: country.label,
-                                        phone: country.phone,
-                                        code: country.code,
-                                    })
-                                }
-                            >
-                                <ListItemIcon>
-                                    <Image
-                                        src={`https://flagcdn.com/w20/${country.code.toLowerCase()}.png`}
-                                        alt={country.label}
-                                        width={25}
-                                        height={15}
-                                        priority
-                                    />
-                                </ListItemIcon>
-                                <ListItemText>
-                                    {country.label} ( {country.phone} )
-                                </ListItemText>
-                            </MenuItem>
-                        ))}
-                    </MenuList>
-                )}
+                <MenuList>
+                    {countryOptions?.map((country: any) => (
+                        <MenuItem
+                            key={country.label}
+                            onClick={() =>
+                                handleCountryChange({
+                                    label: country.label,
+                                    phone: country.phone,
+                                    code: country.code,
+                                })
+                            }
+                        >
+                            <ListItemIcon>
+                                <Image
+                                    src={`https://flagcdn.com/w20/${country.code.toLowerCase()}.png`}
+                                    alt={country.label}
+                                    width={25}
+                                    height={15}
+                                    priority
+                                />
+                            </ListItemIcon>
+                            <ListItemText>
+                                {country.label} ( {country.phone} )
+                            </ListItemText>
+                        </MenuItem>
+                    ))}
+                </MenuList>
             </Menu>
         </Stack>
     );
