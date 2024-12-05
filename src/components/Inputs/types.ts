@@ -89,4 +89,5 @@ export type PlacesSelectInputProps = {
     placeholder?: string;
     helperText?: string;
     error?: boolean;
+    defaultValue?: string;
 };

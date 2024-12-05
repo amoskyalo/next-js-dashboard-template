@@ -1,13 +1,12 @@
 import { DataGridProps } from '@mui/x-data-grid';
-import { PaginationProps } from '@mui/material';
 
 export type DataGridToolbarProps = {
     onAdd?: () => void;
 };
 
-export type DataGridFooterProps = PaginationProps & {
+export type DataGridFooterProps = {
     loading: boolean | undefined;
-    pageSize?: number;
+    count: number;
 };
 
 export type DataGridRowEditActionsProps = {

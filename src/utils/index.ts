@@ -269,6 +269,10 @@ const Utilities = class {
         return fields.some((field) => Object.values(field).some((value) => value === ''));
     }
 
+    isDefaultPagination(param: string, value: any) {
+        return (param === 'start' && value === 1) || (param === 'limit' && value === 10);
+    }
+
     customizeGridColumns(columns: (GridColDef & { mobileWidth?: number })[], numbered?: boolean): GridColDef[] {
         const { isDesktop, isMiniTablet, isMobile, isTablet } = useResponsiveness();
 
