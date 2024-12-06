@@ -30,7 +30,7 @@ This project uses the following dependencies.
 | **[@mui/x-data-grid](https://mui.com/)** | ^7.22.1 | Data grid component from Material UI. |
 | **[@mui/x-date-pickers](https://mui.com/)** | ^7.22.1 | Date pickers from Material UI. |
 | **[@tanstack/react-query](https://tanstack.com/query)** | ^5.59.20 | Data-fetching and state management library for React. |
-| **[@toolpad/core](https://github.com/mui/toolpad)** | 0.10.0 | Toolpad Core for building apps. |
+| **[@toolpad/core](https://github.com/mui/toolpad)** | 0.10.0 | A set of components to build dashboards with React. |
 | **[axios](https://axios-http.com/)** | ^1.7.7 | Promise-based HTTP client for making requests. |
 | **[cookies-next](https://github.com/marcusgold/next-cookies)** | ^4.3.0 | A library for handling cookies in Next.js. |
 | **[formik](https://formik.org/)** | ^2.4.6 | Form management library for React. |
