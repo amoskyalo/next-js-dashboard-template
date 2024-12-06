@@ -1,40 +1,6 @@
-# Table of Contents
+# Introduction
 
--   [Introduction](#introduction)
--   [Overview](#overview)
--   [Inspiration](#inspiration)
--   [Dependancies](#dependancies)
--   [/api](#api)
--   [/app](#app)
--   [/components](#components)
-    -   [Inputs](#inputs)
-    -   [Data Grid](#datagrid)
-    -   [Dialogs](#dialogs)
-    -   [Popover](#popover)
-    -   [Snackbar](#snackbar)
-    -   [Tabs](#tabs)
--   [/constants](#constants)
-    -   [Branding](#branding)
-    -   [routes](#routes)
-    -   [theme](#theme)
--   [/context](#context)
-    -   [CountriesProvided](#countriesProvided)
-    -   [QueryClientProviderWrapper](#queryClientProviderWrapper)
--   [/hooks](#hooks)
-    -   [api-hooks](#api-hooks)
-        -   [useQueryGet](#useQueryGet)
-        -   [useQueryPost](#useQueryPost)
-    -   [useResponsiveness](#useResponsiveness)
--   [/layouts](#layouts)
-    -   [AuthLayout](#authLayouts)
-    -   [DashboardLayout](#dashboardLayout)
--   [/utils](#utils)
-    -   [utils](#utils)
--   [middleware](#middleware)
-
-## Introduction
-
-### Overview
+## Overview
 
 This template is designed to streamline your dashboard development process, allowing you
 to kickstart your projects without starting from scratch every time. It comes
@@ -42,7 +8,7 @@ pre-configured with the essential components and utilities that are commonly use
 modern dashboards. With this template, you'll have most of the foundational setup done
 for you, including `hooks`, `input components`, `data grids`, `snackbars`, `Dialogs`, `popovers` e.t.c.
 
-### Inspiration
+## Inspiration
 
 I built this MUI dashboard template because I was tired of setting up the same things
 every time I started a new project. Instead of spending time on repetitive
@@ -70,6 +36,469 @@ This project uses the following dependencies.
 | **[formik](https://formik.org/)** | ^2.4.6 | Form management library for React. |
 | **[libphonenumber-js](https://github.com/catamphetamine/libphonenumber-js)** | ^1.11.14 | A library for parsing, formatting, and validating phone numbers. |
 | **[react-icons](https://react-icons.github.io/react-icons/)** | ^5.3.0 | A set of popular icons for React. |
+
+
+# hooks walkthrough
+
+The `hooks` folder contains custom React hooks that abstract reusable logic to make the components more readable and easier to maintain.
+
+This folder generally contains utility hooks related to application state management, performance optimizations, and specific functionalities that are reused across the app.
+
+Here are the list of pre-built hooks
+
+1. **useSetSearchParams**
+
+    The `useSetSearchParams` hook provides a convenient way to manage query parameters in the URL.
+    It encapsulates logic for setting and getting URL search parameters using the Next.js `useSearchParams` and `useRouter` hooks.
+
+    This is useful for situations where you need to manipulate or retrieve URL query parameters, such as for `filtering`, `pagination`, or other use cases that require URL state management.
+
+    **Returns**
+
+    `setParams`: A function that sets query parameters in the URL.
+
+    _example_
+
+    ```javascript
+    const { setParams } = useSearchParams();
+
+    setParams({
+        page: 2,
+        sort: 'asc',
+        filter: 'active',
+    });
+    ```
+
+    `getParam`: A function to retrieve the value of a specific query parameter from the URL.
+
+    _example_
+
+    ```javascript
+    const { getParam } = useSearchParams();
+
+    const page = getParam('page'); // e.g., "2"
+    const sort = getParam('sort'); // e.g., "asc"
+    ```
+
+2. **useQueryPost** (_under `hooks > api-hooks`_)
+
+    This hook leverages React Query's `useMutation` to make a `POST` request to a provided API endpoint. It abstracts away the logic of making an API request, handling parameters, and managing state, making it easier to use across components. The hook is generic, allowing for flexibility in data types for both the request payload and query parameters.
+
+    **Generic Types**
+
+    - `TData`: Type for the request payload (data) being sent in the POST request.
+
+    - `TParams`: Type for the query parameters (params) being passed with the request.
+
+    **Parameters**
+
+    - `url` (`keyof typeof urls`): The API endpoint to send the `POST` request to. This corresponds to a key in the `urls` object from the API client configuration.
+
+    - `data` (`TData`): The data to be sent in the `POST` body (optional).
+
+    - `params` (`TParams`): The URL query parameters (optional).
+
+    **Return Value**
+
+    The hook returns the result of the mutation from React Query's `useMutation`, including state such as loading, success, and error states.
+
+    **Usage**
+
+    ```javascript
+    const { mutate, isLoading, isError, data } = useQueryPost<any, { id: number }>('updateUser');
+    ```
+
+3. **useQueryGet**
+
+    It leverages React Query's `useQuery` to make a `GET` request to a provided API endpoint. It abstracts the logic for handling `GET` requests, caching, and error handling, making it easier to use across the application. This hook supports optional query parameters and custom query options, providing flexibility for fetching data.
+
+    **Generic Types**
+
+    - `TData`: Type for the response data returned from the API.
+
+    - `TParams`: Type for the query parameters (params) passed in the request.
+
+    **Parameters**
+
+    - `url` (`keyof typeof urls`): The API endpoint to send the `GET` request to. This corresponds to a key in the `urls` object from the API client configuration.
+
+    - `params` (`TParams`, optional): Query parameters to be sent with the `GET` request.
+
+    - `options` (`Omit<UseQueryOptions<TData>, 'queryKey' | 'queryFn'>, optional`): Additional configuration options for the query, such as refetch settings, cache time, etc. This excludes `queryKey` and `queryFn`, which are managed internally by the hook.
+
+    **Return Value**
+
+    The hook returns the result of the query from React Query's `useQuery`, which includes various states like loading, error, and the fetched data.
+
+    **Usage**
+
+    ```javascript
+    const { data, isLoading, isError, error } = useQueryGet<any, { userId: number }>('getUserProfile', { userId: 123 });
+    ```
+
+4. **useResponsiveness**
+
+    The `useResponsiveness` hook provides a simple way to detect the screen size or device type based on predefined breakpoints. It uses the `useMediaQuery` hook from Material UI to return boolean values for different device categories, such as mobile, tablet, laptop, and desktop.
+
+    **Returned Values**
+
+    - `isMobile` `(boolean)`: `true` if the screen width is 600px or less (mobile devices).
+    - `isMiniTablet` `(boolean)`: `true` if the screen width is 768px or less (small tablets).
+    - `isTablet` `(boolean)`: `true` if the screen width is 1024px or less (tablets).
+    - `isLaptop` `(boolean)`: `true` if the screen width is 1439px or less (laptops).
+    - `isDesktop` `(boolean)`: `true` if the screen width is 1824px or more (desktop screens).
+
+# utils walkthrough
+
+The `utils` folder contains utility functions that serve various purposes throughout the application. These functions are designed to simplify and abstract commonly used operations, such as data manipulation, validations, and other reusable logic that doesn't directly fit into components, hooks, or context. These utility functions help improve code reusability, maintainability, and clarity.
+
+The following functions are available in the utils file:
+
+1. **getValidationSchema**
+
+    Generates a dynamic Yup validation schema based on the provided field types and names. It supports common validation types like email, password, phone number, and credit card information, with optional country-specific phone number validation.
+
+    **Parameters**
+
+    - `args`: An array of objects containing `type` (validation type) and `nam`e (field name).
+    - `countryCode` (optional): Country code for validating phone numbers.
+
+    **Returns**
+
+    A Yup object schema with validation rules for each field.
+
+    _usage example_
+
+    ```javascript
+    const validationSchema = getValidationSchema(
+        [
+            { type: 'email', name: 'email' },
+            { type: 'password', name: 'password' },
+            { type: 'phone_number', name: 'phone' },
+        ],
+        'US',
+    );
+    ```
+
+2. **getFormikFieldProps**
+
+    Generates form field properties required by Formik to handle various input types like phone numbers, autocomplete, OTP, card information, and grouped checkboxes.
+
+    **Parameters**
+
+    - `formik`: Formik object containing values, errors, touched, and helper functions.
+    - `field`: The specific field name to retrieve Formik props for.
+    - `isAutoComplete` (optional): If true, the field is treated as an autocomplete.
+    - `isPhoneNumber` (optional): If true, the field is treated as a phone number input.
+    - `isCardInformation` (optional): If true, the field is treated as a card information input.
+    - `isOTP` (optional): If true, the field is treated as an OTP input.
+    - `isGroupedCheckbox` (optional): If true, the field is treated as a grouped checkbox input.
+    - `isLocation` (optional): If true, the field is treated as a location input.
+
+    **Returns**
+
+    Returns an object with the necessary props for the specified field type, such as `onChange`, `error`, `helperText`, and `value`.
+
+    **usage example**
+
+    ```javascript
+    <TextFieldInput
+        name="email"
+        placeholder="Email"
+        label="Email"
+        {...utils.getFormikFieldProps({ formik, field: 'email' })}
+    />
+    ```
+
+3. **validateCardNumber**
+
+    Validates a credit card number using the `Luhn algorithm`, which is commonly used to validate credit card numbers.
+
+    **Parameters**
+
+    - `cardNumber`: A string representing the credit card number to be validated.
+
+    **Returns**
+
+    `boolean`: Returns `true` if the card number is valid according to the Luhn algorithm, otherwise returns `false`.
+
+    _usage example_
+
+    ```javascript
+    const isValid = validateCardNumber('4539578763621486');
+    console.log(isValid); // true or false
+    ```
+
+4. **formatCardNumber**
+
+    Formats a credit card number into groups of four digits separated by spaces for better readability.
+
+    **Parameters**
+
+    - `cardNumber`: A string representing the raw credit card number (without spaces or dashes).
+
+    **Returns**
+
+    - `string`: A formatted credit card number where every 4 digits are separated by a space.
+
+    _example usage_
+
+    ```javascript
+    const formattedCardNumber = formatCardNumber('4539578763621486');
+    console.log(formattedCardNumber); // "4539 5787 6362 1486"
+    ```
+
+5. **getCardType**
+
+    Determines the type of credit card (e.g., Visa, Mastercard, American Express) based on the provided card number.
+
+    **Parameters**
+
+    - `cardNumber`: A string representing the raw credit card number (without spaces or dashes).
+
+    **Returns**
+
+    - `CardType`: A string representing the card type (`'visa' | 'mastercard' | 'amex' | 'discover' | 'unknown'`).
+
+    _example usage_
+
+    ```javascript
+    const cardType = getCardType('4539578763621486');
+    console.log(cardType); // "visa"
+
+    const unknownCardType = getCardType('1234567890123456');
+    console.log(unknownCardType); // "unknown"
+    ```
+
+6. **formatCardExpiryDate**
+
+    Formats a credit card's expiry date in MM/YY format.
+
+    **Parameters**
+
+    `expiryDate`: A string representing the raw expiry date (typically in MMYY format).
+
+    **Returns**
+
+    - A string representing the formatted expiry date in MM/YY format. If the input is invalid or of length 1, the raw input is returned without formatting.
+
+    _example usage_
+
+    ```javascript
+    const formattedDate = formatCardExpiryDate('1225');
+    console.log(formattedDate); // "12/25"
+
+    const invalidFormat = formatCardExpiryDate('5');
+    console.log(invalidFormat); // "5"
+
+    const emptyDate = formatCardExpiryDate('');
+    console.log(emptyDate); // ""
+    ```
+
+7. **isDefaultPagination**
+
+    Checks whether the provided parameters (param and value) match the default pagination settings.
+
+    **Parameters**
+
+    - `param`: A string representing the parameter to check (e.g., 'start' or 'limit').
+    - `value`: The value associated with the parameter.
+
+    **Returns**
+
+    - A boolean value:
+
+        - `true` if the parameter and value match the default pagination settings:
+
+            - `'start'` with a value of `1`
+
+        - `'limit'` with a value of `10`
+
+        - `false` otherwise.
+
+    _example usage_
+
+    ```javascript
+    isDefaultPagination('start', 1); // true
+    isDefaultPagination('limit', 10); // true
+    isDefaultPagination('start', 5); // false
+    isDefaultPagination('limit', 20); // false
+    ```
+
+8. **customizeGridColumns**
+
+    Customizes grid column definitions based on the responsiveness of the device and optional settings such as adding a "No." column for numbering.
+
+    **Parameters**
+
+    - `columns`: An array of grid column definitions (`GridColDef`), with an optional `mobileWidth` for each column to set different widths on mobile devices.
+
+    - `numbered` (optional): A boolean flag that determines whether to include a "No." column for numbering the rows. Defaults to `false`.
+
+    **Returns**
+
+    - An array of modified `GridColDef` objects, each representing a column with the appropriate width or flex values based on the current screen size.
+
+    _example usage_
+
+    ```javascript
+    // Usage with numbered columns:
+    const columns = [
+        { field: 'name', headerName: 'Name', width: 150 },
+        { field: 'age', headerName: 'Age', mobileWidth: 100 },
+    ];
+
+    const customizedColumns = customizeGridColumns(columns, true);
+    // This would include a "No." column before the "Name" and "Age" columns
+
+    // Usage without numbered columns:
+    const columnsWithoutNumbering = customizeGridColumns(columns);
+    ```
+
+9. **getIndexedRows**
+
+    Adds an indexed "No." column to each row in the provided list of grid rows.
+
+    **Parameters**
+
+    - `rows`: An array of `GridRowModel` objects, where each object represents a row of data in a grid.
+
+    **Returns**
+
+    - A new array of rows, where each row includes an additional `no` property representing a 2-digit index (e.g., "01.", "02.", "03.", etc.) at the beginning of the row data. If no rows are provided (`rows` is `undefined`), the function returns `undefined`.
+
+    _example usage_
+
+    ```javascript
+    // Example with rows
+    const rows = [
+        { name: 'John', age: 30 },
+        { name: 'Jane', age: 25 },
+    ];
+
+    const indexedRows = getIndexedRows(rows);
+
+    // Result:
+    // [
+    //     { no: '01.', name: 'John', age: 30 },
+    //     { no: '02.', name: 'Jane', age: 25 },
+    // ]
+
+    // Example with no rows
+    const indexedRowsEmpty = getIndexedRows(); // Returns undefined
+    ```
+
+10. **mutateOptions**
+
+    This function provides a customizable way to handle API mutation responses, specifically the success and error cases. It allows you to define callbacks for handling the response, success, and error scenarios.
+
+    **Parameters**
+
+    - `MutateOptionsProps<TData>`: A set of options for customizing how the mutation is handled. `TData` refers to the expected response data type from the API.
+
+        - `successAsyncCallback` (optional): A callback function to execute asynchronously on a successful API response.
+
+        - `successCallback` (optional): A callback function to execute on a successful API response.
+        - `errorCallback` (optional): A callback function to execute on an error response.
+
+        - `setLoading` (optional): A state setter function to control the loading state (e.g., setLoading(false) when mutation completes).
+
+    **Returns**
+
+    - An object with two properties ():
+
+        - `onSuccess`: A function to handle the success scenario. It will either call `successCallback` or `successAsyncCallback`, depending on whether the callback is asynchronous.
+
+        - `onError`: A function to handle errors. It shows a generic error toast message and calls the provided `errorCallback`, if available.
+
+    _example usage_
+
+    The return object from the `mutateOptions` function is used as mutation options in React Query's `useMutation` hook.
+
+    ```javascript
+    const { mutate } = useMutation({
+        mutationFn: async (data) => {
+            const response = await apiClient.post('/some-endpoint', data);
+            return response.data;
+        },
+        ...mutateOptions({
+            // Use this to perform some synchronous task with the response.
+            successCallback: (response) => {
+                console.log('Success:', response);
+            },
+            // Use this to perform some asynchronous task with the response.
+            successAsyncCallback: async (response) => {
+                await someAsyncFunction(response);
+            },
+            errorCallback: (response) => {
+                console.error('Error:', response);
+            },
+            setLoading: setLoadingState,
+        }),
+    });
+    ```
+
+    > **Note**
+    >
+    > 1. You can't use both `successCallback` and `successAsyncCallback` at the same time.
+    > 2. This function is fully customizable, and fuly depends on the structure of your `API` response structure.
+    > 3. Make sure to edit it to meet your API response structure.
+
+# middleware file walkthrough
+
+This `middleware` function in Next.js is an important part of handling request interception and server-side logic before rendering pages. It allows us to apply custom logic to all incoming HTTP requests, and can be particularly useful for authentication, route protection, and other custom server-side operations.
+
+In my case, the middleware I specifically used to handle:
+
+-   **Authentication & Protected Routing**: Redirecting users based on their authentication status.
+-   **Routing Logic**: Redirecting users to a different page depending on conditions (_e.g., redirecting from the home page to the dashboard if the user is already logged in_).
+
+# functions folder walkthrough
+
+The `functions` folder contains client-side and server-side actions that centralize the application's business logic.
+
+1. `serverActions`
+
+    In my case, I have `handleSetSessions` and `handleRemoveSession` functions, which are going to handle user sessions. This enables me to access `cookies` from `next/headers`.
+
+2. `clientActions`
+
+    In my case, I have `handleLogout` and `handleUserIdentityUpdate` functions.
+
+# api folder walkthrough
+
+This folder houses all the logic related to interacting with external `api` services.
+
+1. `urls file`
+
+    This file contains a centralized list of API endpoints, which serves as a single source of truth for all the URLs used in the application.
+
+    _example_
+
+    ```javascript
+    export const urls = {
+        login: '/login',
+        getuser: '/get-user',
+    };
+    ```
+
+2. `apiClient file`
+
+    This file sets up the `apiClient` using `Axios` to handle API requests with authentication and a custom configuration. It creates a central place for making HTTP requests to the backend, along with interceptors for handling requests and responses.
+
+    It also initializes `queryClient`.
+
+# layouts folder walkthrough
+
+This folder abstracts the application layouts into two, `AuthLayouts` and `DashboardLayout`. These layouts will be used respectively for each layout.
+
+1. `AuthLayouts`
+
+    Sets up the authentication layout for the application.
+
+2. `DashboardLayout`
+
+    The dashboard layout provides a customizable out-of-the-box layout for a typical dashboard page, using [MUI Toolpad core dashboard layout](https://mui.com/toolpad/core/introduction/).
 
 # Components walkthrough
 
@@ -716,7 +1145,7 @@ The `Snackbar` and `SnackbarContainer` components provide a reusable toast notif
 
 ## Popovers
 
-The Popover components will help provide a way to display UI popups for your application.
+The customized `popover` components will help provide a way to display UI popups for your application.
 
 1. DefaultMenu.
 
@@ -740,4 +1169,96 @@ The Popover components will help provide a way to display UI popups for your app
 
     This component will be used in the DashboardLayout to display user account. It is built on top of MUI `AccountPreview` component.
 
- 
+## Tabs
+
+1. ChipsTabs
+
+    The `ChipTabs` component renders a series of `Chip` elements that act as tabs. The component allows customization of the tab labels, colors, styles, and click behavior. It is designed to handle responsive behavior, showing scrollable tabs on mobile devices. This component is useful when you want to display a set of options or categories that users can select, with each tab represented by a clickable `Chip`.
+
+    **Props**
+
+    - `tabsList (string[])`
+
+        An array of strings that define the labels for the tabs.
+
+        _example_
+
+        ```javascript
+        tabsList={['Tab 1', 'Tab 2', 'Tab 3']}
+        ```
+
+    - `onClick ((tab: string) => void)`
+
+        A callback function that gets triggered when a tab is clicked, passing the tab label as an argument.
+
+        _example_
+
+        ```javascript
+        onClick={(tab) => console.log(tab)}
+        ```
+
+    - `getChipColor ((tab: string) => 'primary' | 'secondary' | 'error' | 'success' | 'default' | undefined):`
+
+        An optional function that returns the color for each Chip based on the tab name. Defaults to 'default'.
+
+        _example_
+
+        ```javascript
+        getChipColor={(tab) => tab === 'Tab 1' ? 'primary' : 'secondary'}
+        ```
+
+    - `getChipVariant ((tab: string) => 'filled' | 'outlined' | undefined)`
+
+        An optional function that determines the variant ('filled' or 'outlined') for each Chip. Defaults to 'outlined'.
+
+        _example_
+
+        ```javascript
+        getChipVariant={(tab) => tab === 'Tab 1' ? 'filled' : 'outlined'}
+        ```
+
+    - `getChipStyles ((tab: string) => SxProps | undefined)`
+
+        An optional function that allows custom styles for each Chip based on the tab name. Uses SxProps for flexible styling.
+
+        _example_
+
+        ```javascript
+        getChipStyles={(tab) => tab === 'Tab 1' ? { backgroundColor: 'lightblue' } : {}}
+        ```
+
+# Constants
+
+The `constants` folder is where all the static values, configurations, and reusable constant data are defined and stored.
+
+1. `branding file`
+
+    This file stores branding options for the app, based on [mui toolpad core branding options](https://mui.com/toolpad/core/api/app-provider/#app-provider-prop-branding).
+
+2. `routes file`
+
+    This file stores navigation definition for the app, based on [mui toolpad core navigation options](https://mui.com/toolpad/core/api/app-provider/#app-provider-prop-navigation)
+
+3. `theme file`
+
+    This file contains theme configuration for the application. The theme is then passed to the [MUI Toolpad code AppProvider](https://mui.com/toolpad/core/api/app-provider/#app-provider-prop-theme)
+
+# context
+
+The `context` folder is responsible for defining and managing global state, settings, and data that need to be shared across different components in your application. This folder uses React Context API to provide and consume shared values throughout the component tree without needing to pass props manually at each level.
+
+1. `QueryClientProviderWrapper file`
+
+    This context is a wrapper for providing the React Query Client globally across the application. It allows components to use React Query to fetch, cache, and synchronize data across different parts of the application.
+
+2. `CountriesContext`
+
+    A context object that holds the country-related data, including:
+
+    - The list of available countries (`countries`).
+
+    - The currently selected country code (`countryCode`).
+
+    - A function to update the country code (`setCountryCode`).
+
+    This context allows any component in the component tree to access country-related information by consuming this context.

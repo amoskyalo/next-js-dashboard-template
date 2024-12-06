@@ -13,7 +13,6 @@ const Utilities = class {
         this.formatCardNumber = this.formatCardNumber.bind(this);
         this.getCardType = this.getCardType.bind(this);
         this.formatCardExpiryDate = this.formatCardExpiryDate.bind(this);
-        this.validateObjectFields = this.validateObjectFields.bind(this);
     }
 
     getValidationSchema(args: Array<{ type: string; name: string }>, countryCode?: CountryCode) {
@@ -263,10 +262,6 @@ const Utilities = class {
         }
 
         return `${month}/${year}`;
-    }
-
-    validateObjectFields(fields: any[]) {
-        return fields.some((field) => Object.values(field).some((value) => value === ''));
     }
 
     isDefaultPagination(param: string, value: any) {
